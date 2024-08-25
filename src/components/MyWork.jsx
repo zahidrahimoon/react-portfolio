@@ -1,11 +1,34 @@
-import webicon from '../assets/web-icon.png';
-import rightarrow from '../assets/right-arrow-dark.png';
+import { useState } from 'react';
+import PortfolioItem from './PortfolioItem';
+import work1 from '../assets/work-1.png';
+import work2 from '../assets/work-2.png';
+import work3 from '../assets/work-3.png';
+import work4 from '../assets/work-4.png';
+import work5 from '../assets/work-1.png';
+import work6 from '../assets/work-2.png';
 
 const MyWork = () => {
+  const [showAll, setShowAll] = useState(false);
+
+  const toggleShowAll = () => {
+    setShowAll(!showAll);
+  };
+
+  const projects = [
+    { id: 1, image: work1, title: 'Frontend Development', subtitle: 'Web Design' },
+    { id: 2, image: work2, title: 'Backend Development', subtitle: 'API Integration' },
+    { id: 3, image: work3, title: 'UI/UX Design', subtitle: 'Mobile App' },
+    { id: 4, image: work4, title: 'Full Stack Project', subtitle: 'E-commerce' },
+    { id: 5, image: work5, title: 'React Application', subtitle: 'Interactive UI' },
+    { id: 6, image: work6, title: 'Node.js Backend', subtitle: 'RESTful API' },
+  ];
+
+  const visibleProjects = showAll ? projects : projects.slice(0, 4);
+
   return (
     <div
-      id="work"
-      className="w-full px-[12%] py-20 bg-gray-50 dark:bg-gray-900 scroll-mt-20 font-playfair"
+      id="mywork"
+      className="w-full px-[12%] py-20 bg-gray-50 dark:bg-gray-900 scroll-mt-20 font-playfair relative overflow-hidden"
     >
       <h4 className="text-center text-lg text-gray-600 dark:text-gray-300 mb-2">
         My Portfolio
@@ -20,64 +43,22 @@ const MyWork = () => {
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 my-10">
-        {/* Web Design Service */}
-        <div className="border border-gray-300 dark:border-gray-700 rounded-lg p-8 hover:shadow-lg cursor-pointer hover:bg-gradient-to-r from-indigo-100 to-purple-100 dark:hover:from-indigo-700 dark:hover:to-purple-700 hover:-translate-y-1 duration-300">
-          <img src={webicon} alt="Web Design Icon" className="w-12 mb-4" />
-          <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">
-            Web Design
-          </h3>
-          <p className="text-sm leading-6 text-gray-600 dark:text-gray-300">
-            Creating visually appealing and user-friendly web designs tailored to your brand's identity and goals.
-          </p>
-          <a href="#home" className="flex items-center gap-2 text-sm mt-4 text-indigo-600 dark:text-indigo-300">
-            Read More <img src={rightarrow} alt="Arrow Icon" className="w-4" />
-          </a>
-        </div>
-
-        {/* Additional example projects can be added here similarly */}
-
-        {/* Mobile App Development */}
-        <div className="border border-gray-300 dark:border-gray-700 rounded-lg p-8 hover:shadow-lg cursor-pointer hover:bg-gradient-to-r from-green-100 to-blue-100 dark:hover:from-green-700 dark:hover:to-blue-700 hover:-translate-y-1 duration-300">
-          <img src={webicon} alt="Mobile App Development Icon" className="w-12 mb-4" />
-          <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">
-            Mobile App Development
-          </h3>
-          <p className="text-sm leading-6 text-gray-600 dark:text-gray-300">
-            Developing responsive and engaging mobile applications that provide a seamless user experience across devices.
-          </p>
-          <a href="#home" className="flex items-center gap-2 text-sm mt-4 text-indigo-600 dark:text-indigo-300">
-            Read More <img src={rightarrow} alt="Arrow Icon" className="w-4" />
-          </a>
-        </div>
-
-        {/* UI/UX Design */}
-        <div className="border border-gray-300 dark:border-gray-700 rounded-lg p-8 hover:shadow-lg cursor-pointer hover:bg-gradient-to-r from-yellow-100 to-orange-100 dark:hover:from-yellow-700 dark:hover:to-orange-700 hover:-translate-y-1 duration-300">
-          <img src={webicon} alt="UI/UX Design Icon" className="w-12 mb-4" />
-          <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">
-            UI/UX Design
-          </h3>
-          <p className="text-sm leading-6 text-gray-600 dark:text-gray-300">
-            Enhancing website visibility and search engine ranking through effective SEO strategies tailored to your needs.
-          </p>
-          <a href="#home" className="flex items-center gap-2 text-sm mt-4 text-indigo-600 dark:text-indigo-300">
-            Read More <img src={rightarrow} alt="Arrow Icon" className="w-4" />
-          </a>
-        </div>
-
-        {/* Graphics Design */}
-        <div className="border border-gray-300 dark:border-gray-700 rounded-lg p-8 hover:shadow-lg cursor-pointer hover:bg-gradient-to-r from-red-100 to-pink-100 dark:hover:from-red-700 dark:hover:to-pink-700 hover:-translate-y-1 duration-300">
-          <img src={webicon} alt="Graphics Design Icon" className="w-12 mb-4" />
-          <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">
-            Graphics Design
-          </h3>
-          <p className="text-sm leading-6 text-gray-600 dark:text-gray-300">
-            Building scalable and secure e-commerce platforms that enhance online shopping experiences and drive sales.
-          </p>
-          <a href="#home" className="flex items-center gap-2 text-sm mt-4 text-indigo-600 dark:text-indigo-300">
-            Read More <img src={rightarrow} alt="Arrow Icon" className="w-4" />
-          </a>
-        </div>
+        {visibleProjects.map((project) => (
+          <PortfolioItem
+            key={project.id}
+            image={project.image}
+            title={project.title}
+            subtitle={project.subtitle}
+          />
+        ))}
       </div>
+
+      <div className='absolute -top-20 -left-20 w-96 h-96 bg-purple-300 rounded-full opacity-20 filter blur-3xl z-0'></div>
+      <div className='absolute -bottom-20 -right-20 w-96 h-96 bg-orange-300 rounded-full opacity-20 filter blur-3xl z-0'></div>
+
+      <button onClick={toggleShowAll} className='w-max flex items-center justify-center gap-2 text-gray-700 border-[0.5px] border-gray-700 rounded-full py-3 px-10 mx-auto my-20'>
+        {showAll ? 'Show Less' : 'Show More'}
+      </button>
     </div>
   );
 };

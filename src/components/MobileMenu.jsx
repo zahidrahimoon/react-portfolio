@@ -1,6 +1,15 @@
-import closeBtn from '../assets/close-black.png';
+import { useState, useEffect } from 'react';
+import closeBtnLight from '../assets/close-black.png';
+import closeBtnDark from '../assets/close-white.png'; 
 
 const MobileMenu = ({ toggleMenu, isMenuOpen }) => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Determine if dark mode is active
+  useEffect(() => {
+    setIsDarkMode(document.documentElement.classList.contains('dark'));
+  }, []);
+
   return (
     <ul
       className={`flex md:hidden flex-col gap-4 py-20 px-10 fixed top-0 right-0 w-64 z-50 h-screen bg-rose-50 shadow-lg transition-transform duration-500 ease-in-out ${
@@ -9,7 +18,7 @@ const MobileMenu = ({ toggleMenu, isMenuOpen }) => {
     >
       <div className="absolute right-6 top-6">
         <img
-          src={closeBtn}
+          src={isDarkMode ? closeBtnLight : closeBtnDark} 
           alt="Close"
           className="w-6 cursor-pointer"
           onClick={toggleMenu}
